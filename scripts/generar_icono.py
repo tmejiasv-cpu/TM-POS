@@ -40,7 +40,7 @@ def main() -> int:
     img.save(TARGET, format="ICO", sizes=SIZES)
 
     size_kb = TARGET.stat().st_size / 1024
-    print(f"OK · {TARGET.name} creado ({size_kb:.1f} KB)")
+    print(f"OK · {TARGET.name} creado ({size_kb:.1f} KB)")#Comments
     return 0
 
 
