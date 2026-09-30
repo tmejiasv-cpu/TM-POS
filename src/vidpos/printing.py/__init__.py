@@ -1,0 +1,1 @@
+"""Impresión de tickets y reportes."""

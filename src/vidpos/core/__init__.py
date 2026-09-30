@@ -1,0 +1,1 @@
+"""Núcleo de vidPOS: BD, migraciones, auth, logging."""

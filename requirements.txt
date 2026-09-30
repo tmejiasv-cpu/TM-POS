@@ -1,0 +1,14 @@
+Pillow>=10.0
+
+# Para reportes en PDF
+# reportlab>=4.0
+
+# Para impresora térmica ESC/POS
+# python-escpos>=3.0
+# pywin32>=306; sys_platform == 'win32'
+
+# Para desarrollo
+# pytest>=7.4
+# pytest-cov>=4.1
+# ruff>=0.4
+# mypy>=1.9

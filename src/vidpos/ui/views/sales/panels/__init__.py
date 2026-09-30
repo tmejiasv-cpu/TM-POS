@@ -1,0 +1,1 @@
+"""Paneles del POS: captura, carrito y cobro."""

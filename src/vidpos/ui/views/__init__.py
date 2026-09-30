@@ -1,0 +1,1 @@
+"""Vistas (pantallas) de vidPOS."""
