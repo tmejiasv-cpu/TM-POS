@@ -1,0 +1,168 @@
+# Tienda Mejía POS - Producción 2.2.0
+
+## Inicio sin pantalla negra
+Hay dos opciones:
+
+1. Ejecutar `INICIAR_TIENDA_MEJIA.vbs`.
+   Abre la aplicación usando `pythonw.exe` y no muestra consola.
+
+2. Crear el ejecutable definitivo:
+   - Doble clic en `CREAR_EJECUTABLE_WINDOWS.bat`.
+   - Espere a que termine.
+   - Se creará `Tienda Mejia POS.exe` en esta misma carpeta.
+   - Después ejecute `CREAR_ACCESO_ESCRITORIO.vbs`.
+
+El acceso directo del escritorio abrirá el `.exe` si existe; de lo contrario
+utilizará el lanzador invisible VBS.
+
+## Base de datos
+`tienda_mejia.db` debe permanecer en la misma carpeta que `Tienda Mejia POS.exe`.
+
+IMPORTANTE: No mueva solamente el .exe al escritorio.
+Use `CREAR_ACCESO_ESCRITORIO.vbs`; el acceso directo apunta a la aplicación
+manteniendo la base de datos en su carpeta de trabajo.
+
+## Reiniciar la base de datos
+1. Cierre completamente Tienda Mejía POS.
+2. Ejecute `REINICIAR_BASE_DATOS.vbs`.
+3. Confirme las dos advertencias.
+4. El programa crea primero una copia en la carpeta `backups`.
+5. Elimina `tienda_mejia.db`.
+6. Al abrir nuevamente el POS, se crea una base nueva en cero.
+
+Credenciales iniciales después del reinicio:
+- Usuario: admin
+- Contraseña: admin123
+
+Cambie la contraseña del administrador después de iniciar la nueva operación.
+
+## Respaldo recomendado
+Durante producción, copie periódicamente `tienda_mejia.db` a una memoria USB,
+disco externo o almacenamiento en la nube cuando la aplicación esté cerrada.
+
+
+NOVEDADES 2.3.0
+- Las ventas sin cobrar se guardan automáticamente como borradores.
+- Si se corta la energía o se cierra la app, al volver a entrar se ofrece recuperar la venta.
+- El módulo Devoluciones está disponible para Gerencia.
+- Para eliminar un artículo del carrito use ELIMINAR ITEM o la tecla Supr.
+
+
+CORRECCIÓN 2.3.1
+La barra de acciones del carrito fue movida arriba de la tabla para mantener
+visibles +1, -1, ELIMINAR ITEM y Vaciar venta en resoluciones como 1366x720.
+
+
+MEJORAS 2.4.0
+El área de cobro fue rediseñada para reducir errores del cajero:
+- Total grande.
+- Métodos de pago visibles.
+- Pago exacto y denominaciones rápidas.
+- Cambio/faltante en tiempo real.
+- Modales propios de Tienda Mejía en operaciones importantes.
+
+
+CORRECCIÓN 2.4.1
+Se corrigió el modal profesional que hacía referencia a `self.root`.
+La aplicación principal ya es la ventana Tk, por lo que ahora se usa directamente.
+También se protegió el proceso de cobro: después de confirmar una venta en SQLite,
+un problema visual ya no puede dejar el carrito pendiente ni inducir un doble cobro.
+
+
+CORRECCIÓN 2.4.2
+Se compactó el panel de cobro para resoluciones 1366x720.
+El campo Efectivo recibido y los botones rápidos ahora permanecen visibles.
+
+
+CORRECCIÓN 2.4.3
+El panel derecho del POS fue reorganizado estructuralmente en tres zonas.
+Efectivo recibido, botones rápidos, cambio y Cobrar ahora tienen espacio reservado
+y no pueden ser tapados por el resumen superior.
+
+
+CORRECCIÓN 2.4.4
+El TOTAL A COBRAR se movió al bloque fijo de cobro para que siempre sea visible
+junto con Efectivo recibido y Cambio.
+
+
+CORRECCIÓN 2.4.5
+En la versión 2.4.4 se intentaba crear la etiqueta del TOTAL antes de inicializar
+la variable `total_var`, deteniendo la construcción del panel derecho. Se corrigió
+el orden de inicialización.
+
+
+MEJORAS 2.5.0
+- Corte de caja con popup institucional y resumen del arqueo.
+- Nuevo botón ELIMINAR PRODUCTO.
+- Si un producto ya tiene historial, se desactiva en lugar de eliminarse físicamente.
+
+
+CORRECCIÓN 2.5.1
+El botón ELIMINAR PRODUCTO se estaba creando antes de existir delete_selected,
+lo que interrumpía la construcción de Productos y de los módulos posteriores.
+
+Ahora Inicio se muestra primero y Caja fue rediseñada como un panel completo con
+estado, métricas, fondo inicial, efectivo esperado y acciones claras.
+
+
+CORRECCIÓN 2.5.2
+Las ventas sí estaban asociadas a cash_session_id, pero la pantalla Caja no se
+reconstruía después de cada venta. Por eso mostraba los valores que tenía cuando
+fue abierta inicialmente.
+
+Ahora Caja recalcula los datos después de cada venta y cada vez que se entra al
+módulo. Reportes también se refresca para mostrar cortes recién cerrados.
+
+
+MEJORAS 2.6.0
+- Compras: detalle imprimible por botón, doble clic o Enter.
+- Seguridad: empleado crea productos, pero no puede modificarlos, configurarlos ni eliminarlos.
+- Compras no tiene opción de eliminación.
+- Gerencia: historial consolidado de actividad por cada empleado, filtrable e imprimible.
+
+
+MEJORAS 2.6.1
+- Empleado puede administrar productos normalmente; solo eliminar queda restringido a Gerencia.
+- Se registran ingresos y salidas de usuarios.
+- El historial de empleados muestra los accesos al sistema.
+- Devoluciones tiene botones fijos visibles en la parte inferior.
+
+
+MEJORAS 2.7.0
+La pantalla Gastos integra registro e historial.
+Cada empleado ve solamente sus propios movimientos.
+Gerencia mantiene visibilidad global.
+
+
+MEJORAS 2.8.0
+- Gerencia vuelve a tener APROBAR / RECHAZAR en Gastos.
+- Nuevo menú Finanzas con consolidado de ingresos, egresos y resultado neto.
+- Reporte financiero filtrable e imprimible.
+
+
+MEJORAS 2.8.1
+Las ventanas popup fueron ampliadas y ahora permiten desplazamiento,
+redimensionamiento y lectura completa de información extensa sin ocultar botones.
+
+
+MEJORAS 2.9.0
+Gerencia > Finanzas ahora incluye Estado de Resultados:
+Ventas netas - costo FIFO/PEPS = utilidad bruta.
+Utilidad bruta - gastos operativos aprobados = utilidad neta operativa.
+Incluye márgenes e impresión del Estado de Resultados.
+
+
+MEJORAS 2.9.1
+- Botones de impresión fijos y siempre visibles en Finanzas.
+- Informe financiero consolidado.
+- Estado de Resultados detallado con ventas, devoluciones, gastos y compras informativas.
+
+
+MEJORAS 2.9.2
+- Ingreso de caja para dinero recibido fuera de ventas.
+- Aumenta el efectivo esperado.
+- Se integra al historial y Finanzas.
+- No altera ventas ni utilidad operativa.
+
+MEJORAS 2.9.3
+- Detalle completo por doble clic/Enter en movimientos de inventario.
